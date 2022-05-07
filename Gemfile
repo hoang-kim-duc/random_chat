@@ -11,6 +11,8 @@ gem 'bootsnap', require: false
 gem 'rack-cors'
 gem 'grpc'
 gem 'devise'
+gem 'pry'
+gem 'ruby-kafka'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
