@@ -9,10 +9,8 @@ gem 'puma', '~> 5.0'
 gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
 gem 'bootsnap', require: false
 gem 'rack-cors'
-gem 'grpc'
 gem 'devise'
 gem 'pry'
-gem 'ruby-kafka'
 gem 'apipie-rails'
 
 group :development, :test do
