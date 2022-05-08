@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users, defaults: { format: :json }
+  apipie
+  devise_for :users, defaults: { format: :json }, controllers: {
+    sessions: 'auth/sessions',
+    registrations: 'auth/registrations'
+  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

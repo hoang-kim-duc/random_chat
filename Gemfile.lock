@@ -66,6 +66,9 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    apipie-rails (0.7.2)
+      actionpack (>= 5.0)
+      activesupport (>= 5.0)
     bcrypt (3.1.17)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
@@ -191,6 +194,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails
   bootsnap
   debug
   devise
