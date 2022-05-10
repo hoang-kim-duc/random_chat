@@ -43,4 +43,23 @@ module Auth::SessionsControllerDocument
   }
   EG
   def create; end
+
+  api :DELETE, '/users/sign_out', 'user log out'
+  example <<-EG
+  {
+    "action": "log_out",
+    "success": true,
+    "errors": []
+  }
+  EG
+  example <<-EG
+  {
+    "action": "log_out",
+    "success": false,
+    "errors": [
+        "user have already logged out"
+    ]
+  }
+  EG
+  def destroy; end
 end

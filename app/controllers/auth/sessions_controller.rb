@@ -44,10 +44,21 @@ class Auth::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    super do
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+
+    if signed_out
       render_json(
         action: 'log_out',
         status: :ok
+      )
+    else
+      render_json(
+        action: 'log_out',
+        status: :forbidden,
+        content: {
+          success: false,
+          errors: ['user have already logged out']
+        }
       )
     end
   end

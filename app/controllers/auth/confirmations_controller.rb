@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Auth::ConfirmationsController < Devise::ConfirmationsController
+  include Auth::ConfirmationsControllerDocument
   # GET /resource/confirmation/new
   # def new
   #   super
@@ -12,9 +13,23 @@ class Auth::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
+    resource.save
+    if resource.errors.empty?
+      render_json(
+        action: 'email_confirm',
+        status: :ok,
+        content: {success: true, user: resource}
+      )
+    else
+      render_json(
+        action: 'email_confirm',
+        status: :forbidden,
+        content: {success: false, errors: resource.errors.full_messages}
+      )
+    end
+  end
 
   # protected
 
