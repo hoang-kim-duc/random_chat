@@ -1,0 +1,20 @@
+setup:
+  addons:
+    - plan: 'heroku-postgresql:hobby-dev'
+      as: DATABASE
+  config:
+    LANG: en_US.UTF-8
+    RACK_ENV: production
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: enabled
+    RAILS_SERVE_STATIC_FILES: enabled
+    SECRET_KEY_BASE: >-
+      30a3b262428e2f9290ff63a2ba12725f0daf1d2f7fb8b61fe95ee9d797a81db50c2627112d56435284a383c359409e90989514d08557ecf2b9613b728d08d6a9
+build:
+  languages:
+    - ruby
+    - 'https://github.com/carloluis/heroku-buildpack-vim'
+run:
+  rake: bundle exec rake
+  console: bin/rails console
+  web: 'bin/rails server -p ${PORT:-5000} -e $RAILS_ENV'
