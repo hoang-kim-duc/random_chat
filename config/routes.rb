@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  default_url_options host: (ENV['HOST'] || 'localhost:3000')
   apipie
   devise_for :users, defaults: { format: :json }, controllers: {
     sessions: 'auth/sessions',
