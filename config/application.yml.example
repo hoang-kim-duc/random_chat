@@ -1,0 +1,8 @@
+GMAIL_ADDRESS:
+GMAIL_PASSWORD:
+development:
+  HOST: 'localhost:3000'
+  ROOT_PATH: 'http://google.com'
+production:
+  HOST: 'https://random-chat-api-server.herokuapp.com'
+  ROOT_PATH: 'http://google.com'
