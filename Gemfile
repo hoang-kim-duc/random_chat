@@ -13,6 +13,7 @@ gem 'devise'
 gem 'pry'
 gem 'apipie-rails'
 gem 'figaro'
+gem 'redis'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]

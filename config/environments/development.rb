@@ -53,6 +53,9 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  # config.action_cable.allowed_request_origins = ['http://localhost:3001']
+  config.action_cable.allowed_request_origins = [ /http:\/\/.*/, /https:\/\/.*/ ]
+
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
@@ -76,4 +79,6 @@ Rails.application.configure do
     :authentication => ENV['MAIL_AUTH'].to_sym,
     :enable_starttls_auto => true
   }
+
+  config.action_cable.allowed_request_origins = ['http://localhost:3001', 'http://127.0.0.1:3001']
 end
