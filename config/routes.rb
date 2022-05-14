@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   get 'hello', to: 'greets#create'
+
+  resource :messages, only: :create
 end
