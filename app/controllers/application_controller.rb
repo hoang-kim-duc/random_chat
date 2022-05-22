@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   respond_to :json
 
   def render_json(action: nil, status:, content: {success: true, errors: []})
-    content ||= {}
+    content[:success] = true unless defined?(content[:success])
     content = {action: action}.merge!(content) if action
     render json: content, status: status
   end
