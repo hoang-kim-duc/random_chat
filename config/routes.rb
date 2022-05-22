@@ -12,13 +12,11 @@ Rails.application.routes.draw do
       get 'edit'
     end
   end
-    # get 'users/confirmation', to: 'auth/confirmations#show'
-    # post 'users/confirmation', to: 'auth/confirmations#create'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-  get 'hello', to: 'greets#create'
-
   resource :messages, only: :create
+  resource :enqueuing, only: [:create, :destroy]
+  # below is just routes for the POCs
+  get 'hello', to: 'greets#create'
+  post 'add_user', to: 'greets#add_user'
+  post 'show', to: 'greets#show'
+
 end

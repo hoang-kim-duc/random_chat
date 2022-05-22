@@ -173,6 +173,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    spring (4.0.0)
     strscan (3.0.1)
     thor (1.2.1)
     timeout (0.2.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.2, >= 7.0.2.3)
   redis
+  spring
   tzinfo-data
 
 RUBY VERSION
