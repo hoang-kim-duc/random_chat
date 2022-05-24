@@ -4,5 +4,11 @@ development:
   HOST: 'localhost:3000'
   ROOT_PATH: 'http://google.com'
 production:
+  MAIL_USERNAME: 'AKIA6E6O5BDWNK42UMFB'
+  MAIL_PASSWORD: 'BNM0pp2V3gRV5fHkqqYOSvx+3/GUBStFoSuhc5odi7pR'
+  MAIL_ADDRESS: 'email-smtp.ap-southeast-1.amazonaws.com'
+  MAIL_DOMAIN: 'smtp.sendgrid.net'
+  MAIL_PORT: '2587'
+  MAIL_AUTH: 'login'
   HOST: 'https://random-chat-api-server.herokuapp.com'
   ROOT_PATH: 'http://google.com'
