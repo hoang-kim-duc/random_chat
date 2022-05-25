@@ -2,7 +2,7 @@ class GreetsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-
+    Devise::Mailer.confirmation_instructions(User.last, 'awdawd').deliver_now
     # UsersChannel.broadcast_to User.find(33), {a: 'b'}
     render json: {message: "Hello world"}
   end
