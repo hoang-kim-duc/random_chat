@@ -70,15 +70,15 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['HOST'] || 'localhost:3000' }
 
   # SMTP settings for gmail
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :user_name => ENV['MAIL_USERNAME'],
-    :password => ENV['MAIL_PASSWORD'],
-    :address => ENV['MAIL_ADDRESS'],
-    :port => ENV['MAIL_PORT'].to_i,
-    :authentication => ENV['MAIL_AUTH'].to_sym,
-    :enable_starttls_auto => true
-  }
+  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => ENV['MAIL_USERNAME'],
+  #   :password => ENV['MAIL_PASSWORD'],
+  #   :address => ENV['MAIL_ADDRESS'],
+  #   :port => ENV['MAIL_PORT'].to_i,
+  #   :authentication => ENV['MAIL_AUTH'].to_sym,
+  #   :enable_starttls_auto => true
+  # }
 
   config.action_cable.allowed_request_origins = ['http://localhost:3001', 'http://127.0.0.1:3001']
 end
