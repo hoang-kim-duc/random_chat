@@ -28,5 +28,9 @@ module RandomChat
 
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_random_chat'
+    config.to_prepare do
+      Devise::Mailer.layout "mailer" # email.haml or email.erb
+    end
+
   end
 end
