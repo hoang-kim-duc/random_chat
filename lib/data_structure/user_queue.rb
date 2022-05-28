@@ -1,6 +1,6 @@
 module DataStructure
   class UserQueue
-    attr_accessor :head, :tail, :processing_node, :current_node
+    attr_accessor :head, :tail
 
     def initialize
       @head = nil
@@ -28,21 +28,6 @@ module DataStructure
 
     def pop_front
       @head = @head.next if @head
-    end
-
-    def process_next_node
-      @processing_node = @head
-      pop_front
-      @current_node = @head
-      @processing_node
-    end
-
-    def travel_forward
-      @current_node = @current_node.next if @current_node
-    end
-
-    def travel_backward
-      @current_node = @current_node.previous if @current_node
     end
 
     def print
