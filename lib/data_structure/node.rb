@@ -18,6 +18,10 @@ module DataStructure
       self.next = node
     end
 
+    def has_next?
+      self.next.present?
+    end
+
     def del_next_node
       keeper = @next
       @next = @next.next

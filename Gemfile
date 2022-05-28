@@ -15,6 +15,7 @@ gem 'apipie-rails'
 gem 'figaro'
 gem 'redis'
 gem 'aasm'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
