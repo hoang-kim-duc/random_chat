@@ -8,7 +8,8 @@ module Auth::RegistrationsControllerDocument
     param :password_confirmation, String, required: true
     param :first_name, String, required: true
     param :last_name, String, required: true
-    param :birthday, Date, required: true, desc: 'dd/mm/yy'
+    param :birthday, Date, required: true, desc: 'dd/mm/yyyy'
+    param :gender, [:male, :female, :other], required: true
   end
   example <<-EG
   {
