@@ -1,4 +1,4 @@
-# class PariringChannel < ApplicationCable::Channel
+class PairingChannel < ApplicationCable::Channel
 #   rescue_from 'MyError', with: :deliver_error_message
 
 #   def subscribed
@@ -11,4 +11,4 @@
 #   def deliver_error_message(e)
 #     # broadcast_to(...)
 #   end
-# end
+end
