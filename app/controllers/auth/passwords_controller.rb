@@ -2,6 +2,9 @@
 
 class Auth::PasswordsController < Devise::PasswordsController
   include Auth::PasswordsControllerDocument
+
+  skip_before_action :authenticate_user!
+
   # GET /resource/password/new
   # def new
   #   super

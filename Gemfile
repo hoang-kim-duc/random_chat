@@ -18,11 +18,13 @@ gem 'aasm'
 gem 'sidekiq'
 gem 'faker'
 gem 'rspec'
+gem 'rspec-rails'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
   gem "letter_opener"
   gem 'factory_bot'
+  gem 'database_cleaner-active_record'
 end
 
 group :development do

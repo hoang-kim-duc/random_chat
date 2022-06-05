@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     resource :password, path: 'users/password', module: :auth, only: [:create, :update] do
       get 'edit'
     end
+    resource :user_setting, only: [:show] do
+      post 'update_or_create'
+    end
   end
+  # resources :users, only: [:show]
   resource :messages, only: :create
   resource :enqueuing, module: :pairing, only: [:create, :destroy]
   # below is just routes for the POCs
