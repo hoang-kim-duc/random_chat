@@ -1,4 +1,6 @@
-class UserSettingsController < ApplicationController
+class Pairing::UserSettingsController < ApplicationController
+  include Pairing::UserSettingsControllerDocument
+
   before_action :set_user_setting, only: %i[ show update_or_create ]
 
   def show
@@ -34,6 +36,6 @@ class UserSettingsController < ApplicationController
 
     def user_setting_params
       params.require(:user_setting).permit(:from_age, :to_age, :lat, :long,
-        :address, :range, :gender, :enable_age_filter, :enable_location_filter, :enable_gender_filter)
+        :address, :radius, :gender, :enable_age_filter, :enable_location_filter, :enable_gender_filter)
     end
 end

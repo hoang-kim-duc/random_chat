@@ -5,6 +5,7 @@ FactoryBot.define do
     gender { UserSetting.genders.keys.sample }
     lat { Faker::Address.latitude }
     long { Faker::Address.longitude }
+    radius { Faker::Number.between(from: 2, to: 20) }
     address { Faker::Address.full_address }
     enable_age_filter { Faker::Boolean.boolean }
     enable_location_filter { Faker::Boolean.boolean }
