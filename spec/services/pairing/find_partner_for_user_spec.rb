@@ -1,5 +1,3 @@
-require "./test/test_helper"
-
 module Pairing
   RSpec.describe FindPartnerForUser do
     describe "#call" do

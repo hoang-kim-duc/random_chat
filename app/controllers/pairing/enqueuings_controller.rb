@@ -1,6 +1,5 @@
 module Pairing
   class EnqueuingsController < ApplicationController
-    before_action :authenticate_user!
 
     def create
       Pairing::FindPartnerForUserJob.perform_async(current_user_id: current_user.id)
