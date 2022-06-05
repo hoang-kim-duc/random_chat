@@ -1,4 +1,4 @@
-RSpec.describe UserSettingsController do
+RSpec.describe Pairing::UserSettingsController do
   let(:user) { create(:user) }
   let(:response_body) { JSON.parse(response.body) }
 

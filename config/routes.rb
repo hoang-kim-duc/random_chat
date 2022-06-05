@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resource :password, path: 'users/password', module: :auth, only: [:create, :update] do
       get 'edit'
     end
-    resource :user_setting, only: [:show] do
+    resource :user_setting, only: [:show], module: :pairing do
       post 'update_or_create'
     end
   end
