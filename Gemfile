@@ -16,10 +16,13 @@ gem 'figaro'
 gem 'redis'
 gem 'aasm'
 gem 'sidekiq'
+gem 'faker'
+gem 'rspec'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
   gem "letter_opener"
+  gem 'factory_bot'
 end
 
 group :development do

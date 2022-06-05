@@ -4,10 +4,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :lockable, :trackable, :confirmable
 
+  enum gender: [:male, :female, :other]
+  attr_accessor :user_node
+
   has_many :user_conversations
   has_many :conversations, through: :user_conversations
   has_many :sent_messages, class_name: 'Message', foreign_key: :sender_id
   has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
 
-  enum gender: [:male, :female, :other]
+  def name
+    "#{first_name} #{last_name}"
+  end
 end

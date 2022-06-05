@@ -11,3 +11,8 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+RSpec.configure do |config|
+  config.include FactoryBot::Syntax::Methods
+end
+FactoryBot.find_definitions

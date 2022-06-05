@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => "/sidekiq"
+
   default_url_options host: (ENV['HOST'] || 'localhost:3000')
   apipie
   devise_for :users, defaults: { format: :json }, controllers: {
@@ -13,7 +17,7 @@ Rails.application.routes.draw do
     end
   end
   resource :messages, only: :create
-  resource :enqueuing, only: [:create, :destroy]
+  resource :enqueuing, module: :pairing, only: [:create, :destroy]
   # below is just routes for the POCs
   get 'hello', to: 'greets#create'
   post 'add_user', to: 'greets#add_user'
