@@ -34,7 +34,7 @@ module Pairing::UserSettingsControllerDocument
     EG
     def show; end
 
-    api :POST, '/user_setting/update_or_create', 'user log in'
+    api :POST, '/user_setting/update_or_create', 'update user setting'
     param :user_setting, Hash, require: true do
       param :from_age, Integer
       param :to_age, Integer

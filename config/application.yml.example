@@ -15,6 +15,7 @@ staging:
   MAIL_PORT:
   MAIL_AUTH:
   HOST:
+  FE_HOST:
   ROOT_PATH:
 production:
   MAIL_USERNAME:
@@ -23,4 +24,5 @@ production:
   MAIL_PORT:
   MAIL_AUTH:
   HOST:
+  FE_HOST:
   ROOT_PATH:
