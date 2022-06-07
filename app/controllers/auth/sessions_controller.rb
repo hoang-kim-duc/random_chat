@@ -2,6 +2,9 @@
 
 class Auth::SessionsController < Devise::SessionsController
   include Auth::SessionsControllerDocument
+
+  skip_before_action :authenticate_user!, only: [:create]
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
