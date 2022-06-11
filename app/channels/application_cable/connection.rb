@@ -8,11 +8,15 @@ module ApplicationCable
 
     private
     def find_verified_user
-      if verified_user = User.find_by(id: request.session[:current_user_id])
+      if current_user_id && verified_user = User.find_by(id: current_user_id)
         verified_user
       else
         reject_unauthorized_connection
       end
+    end
+
+    def current_user_id
+      @current_user_id ||= cookies.encrypted['_random_chat']&.[]('current_user_id')
     end
   end
 end

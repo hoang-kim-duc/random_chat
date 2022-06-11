@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :lockable, :trackable, :confirmable
 
   enum gender: [:male, :female, :other]
+  enum status: [:offline, :online]
   attr_accessor :user_node
 
   has_many :user_conversations
@@ -13,7 +14,25 @@ class User < ApplicationRecord
   has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
   has_one :user_setting
 
+  before_update :dequeue_if_going_offline
+
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def still_connected?
+    still_there = UserPairingChannel.broadcast_to(self, 'ping')
+    return true if still_there.is_a?(Integer) && still_there.positive?
+
+    false
+  end
+
+  private
+
+  def dequeue_if_going_offline
+    return unless status_changed?(to: 'offline')
+
+    self.last_online = DateTime.now
+    SystemVar.users_queue.dequeue_by_user_id(self.id)
   end
 end

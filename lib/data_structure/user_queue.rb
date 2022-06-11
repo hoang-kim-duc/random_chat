@@ -9,7 +9,8 @@ module DataStructure
     end
 
     def enqueue(node)
-      @enqueued_user[node.user_id] = true
+      Rails.logger.info("dequeued user_id #{node.user_id}")
+      @enqueued_user[node.user_id] = node
       if @head
         keeper = @tail
         @tail = node
@@ -21,6 +22,7 @@ module DataStructure
     end
 
     def dequeue(node)
+      Rails.logger.info("dequeued user_id #{node.user_id}")
       @enqueued_user.delete node.user_id
       if node == @head
         return pop_front
@@ -31,6 +33,12 @@ module DataStructure
 
     def user_enqueued?(user_id)
       @enqueued_user[user_id]
+    end
+
+    def dequeue_by_user_id(user_id)
+      return unless user_enqueued?(user_id)
+
+      dequeue(@enqueued_user[user_id])
     end
 
     def pop_front
