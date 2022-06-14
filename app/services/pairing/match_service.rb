@@ -8,7 +8,7 @@ module Pairing
     end
 
     def call
-      @result = {is_matching: true}
+      @result = {is_matching: false}
     end
 
     private

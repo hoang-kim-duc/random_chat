@@ -30,7 +30,8 @@ module DataStructure
 
     def del_self
       keeper = self
-      self.previous.next = self.next
+      self.previous.next = self.next if self.previous
+      self.next.previous = self.previous if self.next
       keeper
     end
   end

@@ -10,6 +10,12 @@ module Pairing
       )
     end
 
-    def destroy; end
+    def destroy
+      SystemVar.users_queue.dequeue_by_user_id(current_user.id)
+      render_json(
+        action: :dequeue_user,
+        status: :ok
+      )
+    end
   end
 end
