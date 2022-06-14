@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def still_connected?
-    still_there = UserPairingChannel.broadcast_to(self, 'ping')
+    still_there = AppearanceChannel.broadcast_to(self, 'ping')
     return true if still_there.is_a?(Integer) && still_there.positive?
 
     false
