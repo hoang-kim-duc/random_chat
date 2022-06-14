@@ -3,13 +3,12 @@ module DataStructure
     attr_accessor :head, :tail, :enqueued_user
 
     def initialize
-      @head = nil
-      @tail = nil
+      reset
       @enqueued_user = {}
     end
 
     def enqueue(node)
-      Rails.logger.info("dequeued user_id #{node.user_id}")
+      Rails.logger.info("queued user_id #{node.user_id}")
       @enqueued_user[node.user_id] = node
       if @head
         keeper = @tail
@@ -24,7 +23,8 @@ module DataStructure
     def dequeue(node)
       Rails.logger.info("dequeued user_id #{node.user_id}")
       @enqueued_user.delete node.user_id
-      if node == @head
+      if @head == @tail && @head == node
+        reset
         return pop_front
       elsif node.is_a? Node
         return node.del_self
@@ -67,6 +67,11 @@ module DataStructure
         node = node.next
       end
       count
+    end
+
+    def reset
+      @head = nil
+      @tail = nil
     end
   end
 end
