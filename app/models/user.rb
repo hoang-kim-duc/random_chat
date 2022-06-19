@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   class << self
     def verify_jwt_token(token)
-      payload = JWT.decode token, Rails.application.credentials[:secret_key_base], true, { algorithm: 'HS256' }
+      payload = JWT.decode token, Rails.application.secret_key_base, true, { algorithm: 'HS256' }
       payload[0].with_indifferent_access
     end
   end
@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def renew_jwt_token
-    self.jwt_token = JWT.encode({user_id: self.id}, Rails.application.credentials[:secret_key_base], 'HS256')
+    self.jwt_token = JWT.encode({user_id: self.id}, Rails.application.secret_key_base, 'HS256')
   end
 
   def renew_jwt_token!
