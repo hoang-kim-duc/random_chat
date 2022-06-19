@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   # resources :users, only: [:show]
   resource :messages, only: :create
   resource :enqueuing, module: :pairing, only: [:create, :destroy]
+  resource :identity, only: :show
   # below is just routes for the POCs
   get 'hello', to: 'greets#create'
   post 'add_user', to: 'greets#add_user'

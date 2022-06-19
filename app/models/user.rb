@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :lockable, :trackable, :confirmable
 
   enum gender: [:male, :female, :other]
+  enum role: [:user, :admin]
   enum status: [:offline, :online]
   attr_accessor :user_node
 
