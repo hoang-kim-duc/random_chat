@@ -15,7 +15,14 @@ class User < ApplicationRecord
   has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
   has_one :user_setting
 
-  before_update :dequeue_if_going_offline
+  before_update :dequeue_if_going_offline, :renew_jwk_token_if_signed_in
+
+  class << self
+    def verify_jwt_token(token)
+      payload = JWT.decode token, Rails.application.credentials[:secret_key_base], true, { algorithm: 'HS256' }
+      payload[0].with_indifferent_access
+    end
+  end
 
   def name
     "#{first_name} #{last_name}"
@@ -28,7 +35,23 @@ class User < ApplicationRecord
     false
   end
 
+  def renew_jwt_token
+    self.jwt_token = JWT.encode({user_id: self.id}, Rails.application.credentials[:secret_key_base], 'HS256')
+  end
+
+  def renew_jwt_token!
+    renew_jwt_token
+    self.save!
+  end
+
   private
+
+  def renew_jwk_token_if_signed_in
+    return unless current_sign_in_at_changed?
+
+    renew_jwt_token
+    Rails.logger.info("User #{self.id} has logined and renewed jwt token")
+  end
 
   def dequeue_if_going_offline
     return unless status_changed?(to: 'offline')
