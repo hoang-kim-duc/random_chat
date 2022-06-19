@@ -16,7 +16,10 @@ module ApplicationCable
     end
 
     def current_user_id
-      @current_user_id ||= cookies.encrypted['_random_chat']&.[]('current_user_id')
+      token = request.params[:jwt_token]
+      reject_unauthorized_connection unless token
+
+      User.verify_jwt_token(token)[:user_id]
     end
   end
 end
