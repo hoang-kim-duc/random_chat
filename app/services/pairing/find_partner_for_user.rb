@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pairing
   class FindPartnerForUser < BaseService
     def initialize(current_user_id)
@@ -8,9 +10,9 @@ module Pairing
     def call
       return if SystemVar.users_queue.user_enqueued?(current_user.id)
 
-      found_parter = get_best_partner(current_user)
-      if found_parter
-        notify_pairing_success(current_user, found_parter)
+      found_partner = get_best_partner(current_user)
+      if found_partner
+        notify_pairing_success(current_user, found_partner)
       else
         SystemVar.users_queue.enqueue UserNode.new(current_user.id)
       end
@@ -43,7 +45,9 @@ module Pairing
     end
 
     def can_pair?(current_user, partner)
-      MatchService.new(current_user, partner).tap(&:call).result[:is_matching]
+      service = MatchService.new(current_user, partner)
+      service.call
+      service.result[:is_matching]
     end
   end
 end

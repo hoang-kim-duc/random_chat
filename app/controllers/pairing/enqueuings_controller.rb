@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pairing
   class EnqueuingsController < ApplicationController
     include Pairing::EnqueuingsControllerDocument

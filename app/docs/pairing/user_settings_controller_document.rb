@@ -1,7 +1,10 @@
-module Pairing::UserSettingsControllerDocument
+# frozen_string_literal: true
+
+module Pairing
+  module UserSettingsControllerDocument
     extend Apipie::DSL::Concern
 
-    api :GET, "/user_setting", "get current user setting"
+    api :GET, '/user_setting', 'get current user setting'
     param :user_setting, Hash, require: true do
       param :from_age, Integer, required: true
       param :to_age, Integer, required: true
@@ -9,7 +12,7 @@ module Pairing::UserSettingsControllerDocument
       param :long, Float, require: true
       param :address, String, require: true
       param :radius, Integer, require: true
-      param :gender, [:male, :female, :other], required: true
+      param :gender, %i[male female other], required: true
       param :enable_age_filter, [true, false]
       param :enable_location_filter, [true, false]
       param :enable_gender_filter, [true, false]
@@ -42,7 +45,7 @@ module Pairing::UserSettingsControllerDocument
       param :long, Float
       param :address, String
       param :radius, Integer
-      param :gender, [:male, :female, :other]
+      param :gender, %i[male female other]
       param :enable_age_filter, [true, false]
       param :enable_location_filter, [true, false]
       param :enable_gender_filter, [true, false]
@@ -69,4 +72,5 @@ module Pairing::UserSettingsControllerDocument
     }
     EG
     def update_or_create; end
+  end
 end

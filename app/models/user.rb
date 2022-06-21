@@ -4,10 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :lockable, :trackable, :confirmable
 
-  enum gender: [:male, :female, :other]
-  enum role: [:user, :admin]
-  enum status: [:offline, :online]
+  enum gender: %i[male female other]
+  enum role: %i[user admin]
+  enum status: %i[offline online]
   attr_accessor :user_node
+
+  delegate :from_age, :to_age, :lat, :long, :radius, :gender, :enable_age_filter,
+           :enable_location_filter, :enable_gender_filter, :accepted_age?,
+           to: :user_setting, prefix: true, allow_nil: true
 
   has_many :user_conversations
   has_many :conversations, through: :user_conversations
@@ -42,6 +46,11 @@ class User < ApplicationRecord
   def renew_jwt_token!
     renew_jwt_token
     self.save!
+  end
+
+  def age
+    now = Time.now.utc.to_date
+    now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
   private

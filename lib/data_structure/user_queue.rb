@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DataStructure
   class UserQueue
     attr_accessor :head, :tail, :enqueued_user
@@ -25,9 +27,9 @@ module DataStructure
       @enqueued_user.delete node.user_id
       if @head == @tail && @head == node
         reset
-        return pop_front
+        pop_front
       elsif node.is_a? Node
-        return node.del_self
+        node.del_self
       end
     end
 
