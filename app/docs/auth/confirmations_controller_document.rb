@@ -1,9 +1,13 @@
-module Auth::ConfirmationsControllerDocument
-  extend Apipie::DSL::Concern
+# frozen_string_literal: true
 
-  api :POST, '/users/confirmation', 'email confirmation'
-  param :confirmation_token, String, require: true, desc: 'confirmation included in the URL received in the instruction mail'
-  example <<-EG
+module Auth
+  module ConfirmationsControllerDocument
+    extend Apipie::DSL::Concern
+
+    api :POST, '/users/confirmation', 'email confirmation'
+    param :confirmation_token, String, require: true,
+                                       desc: 'confirmation included in the URL received in the instruction mail'
+    example <<-EG
   {
     "action": "email_confirm",
     "success": true,
@@ -20,6 +24,7 @@ module Auth::ConfirmationsControllerDocument
         "gender": null
     }
   }
-  EG
-  def show; end
+    EG
+    def show; end
+  end
 end

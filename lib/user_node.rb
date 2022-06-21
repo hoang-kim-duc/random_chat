@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserNode < DataStructure::Node
   attr_accessor :selected
   alias user_id value

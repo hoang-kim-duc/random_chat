@@ -1,11 +1,14 @@
-module Auth::PasswordsControllerDocument
-  extend Apipie::DSL::Concern
+# frozen_string_literal: true
 
-  api :POST, '/users/password', 'send reset password instruction to user email'
-  param :user, Hash, require: true do
-    param :email, String, required: true
-  end
-  example <<-EG
+module Auth
+  module PasswordsControllerDocument
+    extend Apipie::DSL::Concern
+
+    api :POST, '/users/password', 'send reset password instruction to user email'
+    param :user, Hash, require: true do
+      param :email, String, required: true
+    end
+    example <<-EG
   {
     "action": "send_reset_password_instruction",
     "success": true,
@@ -22,16 +25,16 @@ module Auth::PasswordsControllerDocument
       "gender": null
     }
   }
-  EG
-  def create; end
+    EG
+    def create; end
 
-  api 'PUT/PATCH', '/users/password', 'set new password'
-  param :user, Hash, require: true do
-    param :reset_password_token, String, required: true, desc: 'received in instruction email'
-    param :password, String, require: true, desc: 'new password'
-    param :password_confirmation, String, require: true
-  end
-  example <<-EG
+    api 'PUT/PATCH', '/users/password', 'set new password'
+    param :user, Hash, require: true do
+      param :reset_password_token, String, required: true, desc: 'received in instruction email'
+      param :password, String, require: true, desc: 'new password'
+      param :password_confirmation, String, require: true
+    end
+    example <<-EG
   {
     "action": "send_reset_password_instruction",
     "success": true,
@@ -48,6 +51,7 @@ module Auth::PasswordsControllerDocument
       "gender": null
     }
   }
-  EG
-  def update; end
+    EG
+    def update; end
+  end
 end

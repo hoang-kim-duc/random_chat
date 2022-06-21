@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DataStructure
   class Node
     attr_accessor :next, :previous, :value
@@ -30,8 +32,8 @@ module DataStructure
 
     def del_self
       keeper = self
-      self.previous.next = self.next if self.previous
-      self.next.previous = self.previous if self.next
+      previous.next = self.next if previous
+      self.next.previous = previous if self.next
       keeper
     end
   end

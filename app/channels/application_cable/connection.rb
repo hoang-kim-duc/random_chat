@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
@@ -7,6 +9,7 @@ module ApplicationCable
     end
 
     private
+
     def find_verified_user
       if current_user_id && verified_user = User.find_by(id: current_user_id)
         verified_user

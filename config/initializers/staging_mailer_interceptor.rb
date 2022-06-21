@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StagingMailerInterceptor
   def self.delivering_email(message)
     message.to = ENV['EMAIL_RECIPIENT'].split

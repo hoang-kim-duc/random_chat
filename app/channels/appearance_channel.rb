@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AppearanceChannel < ApplicationCable::Channel
   after_unsubscribe :handle_offline
 
@@ -7,8 +9,7 @@ class AppearanceChannel < ApplicationCable::Channel
     stream_for User.find(current_user.id)
   end
 
-  def unsubscribed
-  end
+  def unsubscribed; end
 
   private
 

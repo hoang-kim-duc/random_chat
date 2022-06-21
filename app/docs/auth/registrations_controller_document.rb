@@ -1,17 +1,20 @@
-module Auth::RegistrationsControllerDocument
-  extend Apipie::DSL::Concern
+# frozen_string_literal: true
 
-  api :POST, '/users', 'user registration'
-  param :user, Hash, require: true do
-    param :email, String, required: true
-    param :password, String, required: true
-    param :password_confirmation, String, required: true
-    param :first_name, String, required: true
-    param :last_name, String, required: true
-    param :birthday, Date, required: true, desc: 'dd/mm/yyyy'
-    param :gender, [:male, :female, :other], required: true
-  end
-  example <<-EG
+module Auth
+  module RegistrationsControllerDocument
+    extend Apipie::DSL::Concern
+
+    api :POST, '/users', 'user registration'
+    param :user, Hash, require: true do
+      param :email, String, required: true
+      param :password, String, required: true
+      param :password_confirmation, String, required: true
+      param :first_name, String, required: true
+      param :last_name, String, required: true
+      param :birthday, Date, required: true, desc: 'dd/mm/yyyy'
+      param :gender, %i[male female other], required: true
+    end
+    example <<-EG
   {
     "action": "sign_up",
     "success": true,
@@ -28,8 +31,8 @@ module Auth::RegistrationsControllerDocument
         "gender": null
     }
   }
-  EG
-  example <<-EG
+    EG
+    example <<-EG
   {
     "action": "sign_up",
     "success": false,
@@ -37,6 +40,7 @@ module Auth::RegistrationsControllerDocument
         "Email has already been taken"
     ]
   }
-  EG
-  def create; end
+    EG
+    def create; end
+  end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class ChatChannel < ApplicationCable::Channel
   rescue_from 'MyError', with: :deliver_error_message
@@ -5,7 +6,6 @@ class ChatChannel < ApplicationCable::Channel
   def subscribed
     stream_from "chat_#{params[:room]}"
   end
-
 
   private
 

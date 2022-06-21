@@ -1,9 +1,10 @@
-class GreetsController < ApplicationController
+# frozen_string_literal: true
 
+class GreetsController < ApplicationController
   def create
     # Devise::Mailer.confirmation_instructions(User.last, 'awdawd').deliver_now
     # UsersChannel.broadcast_to User.find(33), {a: 'b'}
-    render json: {message: "Hello world"}
+    render json: { message: 'Hello world' }
   end
 
   def add_user

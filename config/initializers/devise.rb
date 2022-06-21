@@ -3,13 +3,13 @@
 class MyApplicationFailureApp < Devise::FailureApp
   def http_auth_body
     return super unless request_format == :json
+
     {
       sucess: false,
       message: i18n_message
     }.to_json
   end
 end
-
 
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
@@ -325,49 +325,51 @@ Devise.setup do |config|
   end
 end
 
-module ActionDispatch::Routing
-  class Mapper
-    # Override devise's confirmation route setup, as we want to limit it to :create
-    def devise_session(mapping, controllers) #:nodoc:
-      resource :session, only: [], controller: controllers[:sessions], path: "" do
-        post  :create,  path: mapping.path_names[:sign_in]
-        match :destroy, path: mapping.path_names[:sign_out], as: "destroy", via: mapping.sign_out_via
+module ActionDispatch
+  module Routing
+    class Mapper
+      # Override devise's confirmation route setup, as we want to limit it to :create
+      def devise_session(mapping, controllers) # :nodoc:
+        resource :session, only: [], controller: controllers[:sessions], path: '' do
+          post  :create,  path: mapping.path_names[:sign_in]
+          match :destroy, path: mapping.path_names[:sign_out], as: 'destroy', via: mapping.sign_out_via
+        end
       end
-    end
 
-    def devise_password(mapping, controllers) #:nodoc:
-      resource :password, only: [:create, :update, :new, :edit],
-               path: mapping.path_names[:password], controller: controllers[:passwords]
-    end
-
-    # def devise_confirmation(mapping, controllers) #:nodoc:
-    #   resource :confirmation, only: [:create, :show],
-    #            path: mapping.path_names[:confirmation], controller: controllers[:confirmations]
-    # end
-
-    def devise_unlock(mapping, controllers) #:nodoc:
-      if mapping.to.unlock_strategy_enabled?(:email)
-        resource :unlock, only: [:new, :create, :show],
-                 path: mapping.path_names[:unlock], controller: controllers[:unlocks]
+      def devise_password(mapping, controllers) # :nodoc:
+        resource :password, only: %i[create update new edit],
+                            path: mapping.path_names[:password], controller: controllers[:passwords]
       end
-    end
 
-    def devise_registration(mapping, controllers) #:nodoc:
-      path_names = {
-        new: mapping.path_names[:sign_up],
-        edit: mapping.path_names[:edit],
-        cancel: mapping.path_names[:cancel]
-      }
+      # def devise_confirmation(mapping, controllers) #:nodoc:
+      #   resource :confirmation, only: [:create, :show],
+      #            path: mapping.path_names[:confirmation], controller: controllers[:confirmations]
+      # end
 
-      options = {
-        only: [:new, :create, :edit, :update, :destroy],
-        path: mapping.path_names[:registration],
-        path_names: path_names,
-        controller: controllers[:registrations]
-      }
+      def devise_unlock(mapping, controllers) # :nodoc:
+        if mapping.to.unlock_strategy_enabled?(:email)
+          resource :unlock, only: %i[new create show],
+                            path: mapping.path_names[:unlock], controller: controllers[:unlocks]
+        end
+      end
 
-      resource :registration, options do
-        get :cancel
+      def devise_registration(mapping, controllers) # :nodoc:
+        path_names = {
+          new: mapping.path_names[:sign_up],
+          edit: mapping.path_names[:edit],
+          cancel: mapping.path_names[:cancel]
+        }
+
+        options = {
+          only: %i[new create edit update destroy],
+          path: mapping.path_names[:registration],
+          path_names: path_names,
+          controller: controllers[:registrations]
+        }
+
+        resource :registration, options do
+          get :cancel
+        end
       end
     end
   end

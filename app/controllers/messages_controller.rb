@@ -1,10 +1,11 @@
-class MessagesController < ApplicationController
+# frozen_string_literal: true
 
+class MessagesController < ApplicationController
   def create
     if message = Message.new(message_params)
       render_json(
         action: 'send_message',
-        status: :ok,
+        status: :ok
       )
       puts "status #{UsersChannel.broadcast_to User.find(36), message_params['text']}"
     else

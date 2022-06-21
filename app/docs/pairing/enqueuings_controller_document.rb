@@ -1,7 +1,10 @@
-module Pairing::EnqueuingsControllerDocument
+# frozen_string_literal: true
+
+module Pairing
+  module EnqueuingsControllerDocument
     extend Apipie::DSL::Concern
 
-    api :POST, "/enqueuing", "enqueue user"
+    api :POST, '/enqueuing', 'enqueue user'
     example <<-EG
     {
       "action": "enqueue_user",
@@ -11,7 +14,7 @@ module Pairing::EnqueuingsControllerDocument
     EG
     def create; end
 
-    api :DELETE, "/enqueuing", "enqueue user"
+    api :DELETE, '/enqueuing', 'enqueue user'
     example <<-EG
     {
       "action": "dequeue_user",
@@ -20,4 +23,5 @@ module Pairing::EnqueuingsControllerDocument
     }
     EG
     def destroy; end
+  end
 end

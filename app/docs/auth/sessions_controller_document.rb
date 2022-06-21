@@ -1,12 +1,15 @@
-module Auth::SessionsControllerDocument
-  extend Apipie::DSL::Concern
+# frozen_string_literal: true
 
-  api :POST, '/users/sign_in', 'user log in'
-  param :user, Hash, require: true do
-    param :email, String, required: true
-    param :password, String, required: true
-  end
-  example <<-EG
+module Auth
+  module SessionsControllerDocument
+    extend Apipie::DSL::Concern
+
+    api :POST, '/users/sign_in', 'user log in'
+    param :user, Hash, require: true do
+      param :email, String, required: true
+      param :password, String, required: true
+    end
+    example <<-EG
   {
     "action": "log_in",
     "success": false,
@@ -14,8 +17,8 @@ module Auth::SessionsControllerDocument
         "user have already loged in"
     ]
   }
-  EG
-  example <<-EG
+    EG
+    example <<-EG
   {
     "action": "log_in",
     "success": false,
@@ -23,8 +26,8 @@ module Auth::SessionsControllerDocument
         "wrong email or password"
     ]
   }
-  EG
-  example <<-EG
+    EG
+    example <<-EG
   {
     "action": "log_in",
     "success": true,
@@ -41,18 +44,18 @@ module Auth::SessionsControllerDocument
         "gender": null
     }
   }
-  EG
-  def create; end
+    EG
+    def create; end
 
-  api :DELETE, '/users/sign_out', 'user log out'
-  example <<-EG
+    api :DELETE, '/users/sign_out', 'user log out'
+    example <<-EG
   {
     "action": "log_out",
     "success": true,
     "errors": []
   }
-  EG
-  example <<-EG
+    EG
+    example <<-EG
   {
     "action": "log_out",
     "success": false,
@@ -60,6 +63,7 @@ module Auth::SessionsControllerDocument
         "user have already logged out"
     ]
   }
-  EG
-  def destroy; end
+    EG
+    def destroy; end
+  end
 end

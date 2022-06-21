@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
 
@@ -5,9 +7,9 @@ class ApplicationController < ActionController::API
 
   respond_to :json
 
-  def render_json(action: nil, status:, content: {success: true, errors: []})
+  def render_json(status:, action: nil, content: { success: true, errors: [] })
     content[:success] = true unless defined?(content[:success])
-    content = {action: action}.merge!(content) if action
+    content = { action: }.merge!(content) if action
     render json: content, status: status
   end
 

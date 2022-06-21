@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Message < ApplicationRecord
-  enum status: [:sent, :received, :seen]
-  enum tag: [:normal, :generated]
+  enum status: %i[sent received seen]
+  enum tag: %i[normal generated]
 
   belongs_to :conversation
   belongs_to :sender, class_name: 'User'
