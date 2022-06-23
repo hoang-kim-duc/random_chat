@@ -22,6 +22,8 @@ module Pairing
 
     def notify_pairing_success(current_user, found_parter)
       SystemVar.users_queue.dequeue(found_parter.user_node)
+      PairingChannel.broadcast_to(current_user, "pair successfully with user #{found_parter.id}")
+      PairingChannel.broadcast_to(found_parter, "pair successfully with user #{current_user.id}")
       puts "pair success for #{current_user.name} and #{found_parter.name}"
     end
 
