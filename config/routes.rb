@@ -22,7 +22,9 @@ Rails.application.routes.draw do
     end
   end
   # resources :users, only: [:show]
-  resource :messages, only: :create
+  resources :conversations, module: :chat, only: [] do
+    resources :messages, only: :create
+  end
   resource :enqueuing, module: :pairing, only: %i[create destroy]
   resource :identity, only: :show
   # below is just routes for the POCs

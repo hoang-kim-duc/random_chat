@@ -2,6 +2,6 @@
 
 class PairingChannel < ApplicationCable::Channel
   def subscribed
-    stream_for User.find(current_user.id)
+    stream_from Broadcaster::URL.pairing(current_user.id)
   end
 end
