@@ -6,7 +6,7 @@ class AppearanceChannel < ApplicationCable::Channel
   def subscribed
     # user = User.find(params[:id])
     current_user.online!
-    stream_for User.find(current_user.id)
+    stream_from Broadcaster::URL.appearance(current_user.id)
   end
 
   def unsubscribed; end

@@ -7,6 +7,16 @@ class ApplicationController < ActionController::API
 
   respond_to :json
 
+  rescue_from StandardError do |error|
+    render_json(
+      status: :bad_request,
+      content: {
+        success: false,
+        errors: [error.message]
+      }
+    )
+  end
+
   def render_json(status:, action: nil, content: { success: true, errors: [] })
     content[:success] = true unless defined?(content[:success])
     content = { action: }.merge!(content) if action

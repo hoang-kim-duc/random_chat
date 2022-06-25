@@ -1,0 +1,11 @@
+class MessageSerializer < ApplicationSerializer
+  attributes :id, :conversation_id, :text, :status, :created_at, :seen_at
+
+  def created_at
+    process_time(object.created_at)
+  end
+
+  def seen_at
+    process_time(object.seen_at)
+  end
+end

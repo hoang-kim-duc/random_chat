@@ -8,4 +8,8 @@ class Conversation < ApplicationRecord
   accepts_nested_attributes_for :user_conversations, reject_if: lambda { |attributes|
                                                                   attributes['user_id'].blank?
                                                                 }, allow_destroy: true
+
+  # def read_all
+  #   messages.unread.seen!
+  # end
 end

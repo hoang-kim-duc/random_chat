@@ -6,6 +6,7 @@ git_source(:github) { |_repo| "https://github.com/#{repo}.git" }
 ruby '3.1.0'
 
 gem 'aasm'
+gem 'active_model_serializers'
 gem 'apipie-rails'
 gem 'bootsnap', require: false
 gem 'devise'
