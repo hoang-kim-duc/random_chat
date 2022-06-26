@@ -20,7 +20,7 @@ class Message < ApplicationRecord
   end
 
   belongs_to :conversation
-  belongs_to :sender, class_name: 'User'
+  belongs_to :sender, class_name: 'User', optional: true
   belongs_to :recipient, class_name: 'User'
   scope :unread, -> { where.not(status: :seen) }
 

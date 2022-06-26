@@ -18,14 +18,24 @@ module Pairing
 
     private
 
-    def notify_pairing_success(current_user, found_parter)
-      SystemVar.users_queue.dequeue(found_parter.user_node)
-      Conversation.create(user_conversations_attributes: [
-        { user_id: current_user.id }, { user_id: found_parter.id }
+    def notify_pairing_success(current_user, found_partner)
+      SystemVar.users_queue.dequeue(found_partner.user_node)
+      conversation = Conversation.create!(user_conversations_attributes: [
+        { user_id: current_user.id }, { user_id: found_partner.id }
       ])
-      Broadcaster.broadcast_to_pairing(current_user.id, "pair successfully with user #{found_parter.id}")
-      Broadcaster.broadcast_to_pairing(found_parter.id, "pair successfully with user #{current_user.id}")
-      puts "pair success for #{current_user.name} and #{found_parter.name}"
+      message1 = conversation.messages.create!(recipient_id: current_user.id, is_system_message: true,
+        text: SystemVar.pair_successfully_messasge(found_partner.name), status: "received")
+      message2 = conversation.messages.create!(recipient_id: found_partner.id, is_system_message: true,
+        text: SystemVar.pair_successfully_messasge(current_user.name), status: "received")
+      Broadcaster.broadcast_to_pairing(current_user.id, {
+        conversation: conversation.to_h,
+        last_message: message1.text
+      })
+      Broadcaster.broadcast_to_pairing(found_partner.id, {
+        conversation: conversation.to_h,
+        last_message: message2.text
+      })
+      puts "pair success for #{current_user.name} and #{found_partner.name}"
     end
 
     def get_best_partner(current_user)
