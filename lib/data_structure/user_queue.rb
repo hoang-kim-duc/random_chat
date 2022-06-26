@@ -5,6 +5,10 @@ module DataStructure
     attr_accessor :head, :tail, :enqueued_user
 
     def initialize
+      reset
+    end
+
+    def reset
       @head = nil
       @tail = nil
       @enqueued_user = {}

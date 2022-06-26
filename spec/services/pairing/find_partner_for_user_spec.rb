@@ -25,9 +25,9 @@ module Pairing
         end
       end
 
-      context 'join twice' do
-        it 'should be enqueue just once' do
-          service1.call
+      context 'join' do
+        it 'should be enqueue once' do
+          SystemVar.users_queue.reset
           service1.call
           expect(SystemVar.users_queue.size).to eql(1)
         end
