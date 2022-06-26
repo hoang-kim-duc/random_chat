@@ -34,4 +34,8 @@ class ApplicationController < ActionController::API
       }
     )
   end
+
+  def paging(collection)
+    collection.page(params[:page]).per(params[:per_page])
+  end
 end
