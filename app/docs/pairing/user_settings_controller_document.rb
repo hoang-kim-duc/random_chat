@@ -5,18 +5,6 @@ module Pairing
     extend Apipie::DSL::Concern
 
     api :GET, '/user_setting', 'get current user setting'
-    param :user_setting, Hash, require: true do
-      param :from_age, Integer, required: true
-      param :to_age, Integer, required: true
-      param :lat, Float, require: true
-      param :long, Float, require: true
-      param :address, String, require: true
-      param :radius, Integer, require: true
-      param :gender, %i[male female other], required: true
-      param :enable_age_filter, [true, false]
-      param :enable_location_filter, [true, false]
-      param :enable_gender_filter, [true, false]
-    end
     example <<-EG
     {
       "id": 6,

@@ -4,29 +4,41 @@ module Chat
     include Chat::MessagesControllerDocument
 
     def create
-      if message = Message.create(message_params)
-        message.broadcast!
-        render_json(
-          action: 'send_message',
-          status: :ok
-        )
+      conversation = Conversation.find_by(id: params[:conversation_id])
+      errors = []
+      if conversation
+        errors << "the sender is not in this conversation" unless conversation.user_ids.include?(current_user.id)
+        errors << "the recipient is not in this conversation" unless conversation.user_ids.include?(message_params[:recipient_id].to_i)
       else
-        render_json(
-          action: 'send_message',
-          status: :bad_request,
-          content: {
-            success: false,
-            errors: message.errors.full_messages
-          }
-        )
+        errors << "conversation with id #{params[:conversation_id]} is not exist"
       end
+
+      if errors.empty?
+        if message = conversation.messages.create(message_params)
+          message.broadcast!
+          return render_json(
+            action: 'send_message',
+            status: :ok
+          )
+        else
+          errors = message&.errors&.full_messages
+        end
+      end
+
+      render_json(
+        action: 'send_message',
+        status: :bad_request,
+        content: {
+          success: false,
+          errors: errors
+        }
+      )
     end
 
     private
 
     def message_params
-      message_params = params.require(:message).permit(:text, :recipient_id)
-      message_params.merge(sender_id: current_user.id, conversation_id: params[:conversation_id])
+      @message_params ||= params.require(:message).permit(:text, :recipient_id).merge(sender_id: current_user.id)
     end
   end
 end

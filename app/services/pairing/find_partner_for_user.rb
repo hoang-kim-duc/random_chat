@@ -8,8 +8,6 @@ module Pairing
     end
 
     def call
-      return if SystemVar.users_queue.user_enqueued?(current_user.id)
-
       found_partner = get_best_partner(current_user)
       if found_partner
         notify_pairing_success(current_user, found_partner)
@@ -22,8 +20,11 @@ module Pairing
 
     def notify_pairing_success(current_user, found_parter)
       SystemVar.users_queue.dequeue(found_parter.user_node)
-      Broadcaster.broadcast_to_pairing(current_user_id, "pair successfully with user #{found_parter.id}")
-      Broadcaster.broadcast_to_pairing(found_parter_id, "pair successfully with user #{current_user.id}")
+      Conversation.create(user_conversations_attributes: [
+        { user_id: current_user.id }, { user_id: found_parter.id }
+      ])
+      Broadcaster.broadcast_to_pairing(current_user.id, "pair successfully with user #{found_parter.id}")
+      Broadcaster.broadcast_to_pairing(found_parter.id, "pair successfully with user #{current_user.id}")
       puts "pair success for #{current_user.name} and #{found_parter.name}"
     end
 

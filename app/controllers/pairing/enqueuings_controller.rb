@@ -5,11 +5,19 @@ module Pairing
     include Pairing::EnqueuingsControllerDocument
 
     def create
-      Pairing::FindPartnerForUser.new(current_user.id).call
-      render_json(
-        action: :enqueue_user,
-        status: :ok
-      )
+      unless SystemVar.users_queue.user_enqueued?(current_user.id)
+        Pairing::FindPartnerForUser.new(current_user.id).call
+        render_json(
+          action: :enqueue_user,
+          status: :ok
+        )
+      else
+        render_json(
+          action: :enqueue_user,
+          status: :bad_request,
+          content: { success: false, error: ["user is already enqueued"] }
+        )
+      end
     end
 
     def destroy
