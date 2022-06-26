@@ -3,42 +3,73 @@ module Chat
   class MessagesController < ApplicationController
     include Chat::MessagesControllerDocument
 
+    before_action :load_conversation, :check_current_user_in_conversation
+    before_action :check_recipient_in_conversation, only: :create
+
+    def index
+      render json: paging(@conversation.messages)
+    end
+
     def create
-      conversation = Conversation.find_by(id: params[:conversation_id])
-      errors = []
-      if conversation
-        errors << "the sender is not in this conversation" unless conversation.user_ids.include?(current_user.id)
-        errors << "the recipient is not in this conversation" unless conversation.user_ids.include?(message_params[:recipient_id].to_i)
+      if message = @conversation.messages.create(message_params)
+        message.broadcast!
+        return render_json(
+          action: 'send_message',
+          status: :ok
+        )
       else
-        errors << "conversation with id #{params[:conversation_id]} is not exist"
+        render_json(
+          action: 'send_message',
+          status: :bad_request,
+          content: {
+            success: false,
+            errors: message.errors.full_messages
+          }
+        )
       end
-
-      if errors.empty?
-        if message = conversation.messages.create(message_params)
-          message.broadcast!
-          return render_json(
-            action: 'send_message',
-            status: :ok
-          )
-        else
-          errors = message&.errors&.full_messages
-        end
-      end
-
-      render_json(
-        action: 'send_message',
-        status: :bad_request,
-        content: {
-          success: false,
-          errors: errors
-        }
-      )
     end
 
     private
 
     def message_params
       @message_params ||= params.require(:message).permit(:text, :recipient_id).merge(sender_id: current_user.id)
+    end
+
+    def load_conversation
+      @conversation = Conversation.find_by(id: params[:conversation_id])
+      return if @conversation
+
+      render_json(
+        status: :bad_request,
+        content: {
+          success: false,
+          errors: ["conversation with id #{params[:conversation_id]} is not exist"]
+        }
+      )
+    end
+
+    def check_recipient_in_conversation
+      return if @conversation.user_ids.include?(message_params[:recipient_id].to_i)
+
+      render_json(
+        status: :bad_request,
+        content: {
+          success: false,
+          errors: ["the sender is not in this conversation"]
+        }
+      )
+    end
+
+    def check_current_user_in_conversation
+      return if @conversation.user_ids.include?(current_user.id)
+
+      render_json(
+        status: :bad_request,
+        content: {
+          success: false,
+          errors: ["the recipient is not in this conversation"]
+        }
+      )
     end
   end
 end
