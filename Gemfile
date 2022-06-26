@@ -8,6 +8,7 @@ ruby '3.1.0'
 gem 'aasm'
 gem 'active_model_serializers'
 gem 'apipie-rails'
+gem "aws-sdk-s3", require: false
 gem 'bootsnap', require: false
 gem 'devise'
 gem 'faker'
@@ -24,6 +25,7 @@ gem 'rspec-rails'
 gem 'sidekiq'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'kaminari'
+
 
 group :development, :test do
   gem 'database_cleaner-active_record'
