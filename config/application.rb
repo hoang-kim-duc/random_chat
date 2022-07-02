@@ -28,6 +28,7 @@ module RandomChat
     config.autoload_paths += %w[lib/]
     config.api_only = true
 
+    # config.active_storage.draw_routes = false
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_random_chat'
     config.to_prepare do

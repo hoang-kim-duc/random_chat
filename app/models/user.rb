@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :sent_messages, class_name: 'Message', foreign_key: :sender_id
   has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
   has_one :user_setting
+  has_one_attached :avatar
 
   before_update :dequeue_if_going_offline, :renew_jwk_token_if_signed_in
 

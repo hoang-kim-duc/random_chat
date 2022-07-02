@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   resources :conversations, module: :chat, only: [] do
     resources :messages, only: [:create, :index]
   end
+  resources :users, only: [:show] do
+    get 'avatar', to: 'users#avatar'
+  end
   resource :enqueuing, module: :pairing, only: %i[create destroy]
   resource :identity, only: :show
   # below is just routes for the POCs

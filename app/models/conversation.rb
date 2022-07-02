@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Conversation < ApplicationRecord
-  enum status: %i[openning closed]
+  include AASM
+
   has_many :messages, dependent: :delete_all
   has_many :user_conversations, dependent: :delete_all
   has_many :users, through: :user_conversations
@@ -9,7 +10,15 @@ class Conversation < ApplicationRecord
                                                                   attributes['user_id'].blank?
                                                                 }, allow_destroy: true
 
-  # validate :unique_pair
+  aasm column: :status do
+    state :openning, initial: true
+    state :sharing
+    state :closed
+
+    event :close do
+      transitions from: [:openning, :sharing], to: :closed
+    end
+  end
 
   private
 
