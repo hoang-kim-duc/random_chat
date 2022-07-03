@@ -27,14 +27,8 @@ module Pairing
         text: SystemVar.pair_successfully_messasge(found_partner.name), status: "received")
       message2 = conversation.messages.create!(recipient_id: found_partner.id, is_system_message: true,
         text: SystemVar.pair_successfully_messasge(current_user.name), status: "received")
-      Broadcaster.broadcast_to_pairing(current_user.id, {
-        conversation: conversation.to_h,
-        last_message: message1.text
-      })
-      Broadcaster.broadcast_to_pairing(found_partner.id, {
-        conversation: conversation.to_h,
-        last_message: message2.text
-      })
+      Broadcaster.broadcast_to_pairing(current_user.id, conversation.to_h)
+      Broadcaster.broadcast_to_pairing(found_partner.id, conversation.to_h)
       puts "pair success for #{current_user.name} and #{found_partner.name}"
     end
 
