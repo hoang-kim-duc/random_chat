@@ -54,6 +54,12 @@ class User < ApplicationRecord
     now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
+  def avatar_url
+    Rails.application.routes.url_helpers.rails_blob_url(self.avatar)
+  rescue
+    nil
+  end
+
   private
 
   def renew_jwk_token_if_signed_in

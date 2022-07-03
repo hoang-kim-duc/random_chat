@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
   # resources :users, only: [:show]
-  resources :conversations, module: :chat, only: [] do
+  resources :conversations, module: :chat, only: [:index] do
     resources :messages, only: [:create, :index]
   end
   resource :enqueuing, module: :pairing, only: %i[create destroy]
