@@ -89,7 +89,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: ENV['HOST'] || 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: ENV['FE_HOST'] || 'localhost:3000' }
 
   # SMTP settings for gmail
   config.action_mailer.delivery_method = :smtp

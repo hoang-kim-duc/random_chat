@@ -34,5 +34,7 @@ module RandomChat
     config.to_prepare do
       Devise::Mailer.layout 'mailer' # email.haml or email.erb
     end
+
+    config.asset_host = "#{ENV['FE_HOST']}/api"
   end
 end
