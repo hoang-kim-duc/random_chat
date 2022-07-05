@@ -55,7 +55,7 @@ module Chat
         status: :bad_request,
         content: {
           success: false,
-          errors: ["the sender is not in this conversation"]
+          errors: ["the recipient is not in this conversation"]
         }
       )
     end
@@ -67,7 +67,7 @@ module Chat
         status: :bad_request,
         content: {
           success: false,
-          errors: ["the recipient is not in this conversation"]
+          errors: ["the sender is not in this conversation"]
         }
       )
     end

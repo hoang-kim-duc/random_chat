@@ -55,7 +55,11 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    Rails.application.routes.url_helpers.rails_blob_url(self.avatar)
+    if self.avatar.attached?
+      Rails.application.routes.url_helpers.rails_blob_url(self.avatar)
+    else
+      ''
+    end
   rescue
     nil
   end

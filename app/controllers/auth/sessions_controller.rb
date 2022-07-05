@@ -33,7 +33,7 @@ module Auth
           status: :ok,
           content: {
             success: true,
-            user: current_user
+            user: current_user.to_h
           }
         )
       else
