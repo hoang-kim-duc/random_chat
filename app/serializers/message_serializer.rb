@@ -3,10 +3,10 @@ class MessageSerializer < ApplicationSerializer
     :text, :status, :created_at, :seen_at, :is_system_message
 
   def created_at
-    process_time(object.created_at)
+    process_time(object.created_at, @instance_options[:viewer])
   end
 
   def seen_at
-    process_time(object.seen_at)
+    process_time(object.seen_at, @instance_options[:viewer])
   end
 end

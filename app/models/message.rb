@@ -27,7 +27,10 @@ class Message < ApplicationRecord
   private
 
   def sent_to_recipient_successfully?
-    broadcast = Broadcaster.broadcast_to_new_message(recipient.id, self.to_h)
+    broadcast = Broadcaster.broadcast_to_new_message(
+      recipient.id,
+      self.to_h(viewer: recipient)
+    )
     broadcast >= 1
   end
 end

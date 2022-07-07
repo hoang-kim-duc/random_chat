@@ -1,7 +1,8 @@
 class ApplicationSerializer < ActiveModel::Serializer
-  def process_time(datetime)
+  def process_time(datetime, user)
     return nil unless datetime
 
-    datetime.in_time_zone(object.recipient.time_zone).strftime('%Y-%m-%dT%H:%M:%S.%L%z')
+    datetime = datetime.in_time_zone(user.time_zone) if user&.time_zone
+    datetime.strftime('%Y-%m-%dT%H:%M:%S.%L%z')
   end
 end

@@ -7,7 +7,7 @@ module Chat
     before_action :check_recipient_in_conversation, only: :create
 
     def index
-      render json: paging(@conversation.messages.order(created_at: :desc))
+      render json: paging(@conversation.messages.order(created_at: :desc)), viewer: current_user
     end
 
     def create
