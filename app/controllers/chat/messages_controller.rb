@@ -5,6 +5,7 @@ module Chat
 
     before_action :load_conversation, :check_current_user_in_conversation
     before_action :check_recipient_in_conversation, only: :create
+    # after_action :mark_all_received_messages
 
     def index
       render json: paging(@conversation.messages.order(created_at: :desc)), viewer: current_user
@@ -32,7 +33,7 @@ module Chat
     private
 
     def message_params
-      @message_params ||= params.require(:message).permit(:text, :recipient_id).merge(sender_id: current_user.id)
+      @message_params ||= params.require(:message).permit(:text, :recipient_id, :uuid).merge(sender_id: current_user.id)
     end
 
     def load_conversation

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   # resources :users, only: [:show]
   resources :conversations, module: :chat, only: [:index] do
     resources :messages, only: [:create, :index]
+    put 'seen', to: 'conversations#seen_all'
   end
   resource :enqueuing, module: :pairing, only: %i[create destroy]
   resource :identity, only: :show

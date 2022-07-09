@@ -7,8 +7,8 @@ class Message < ApplicationRecord
 
   aasm column: :status do
     state :sent, initial: true
-    state :received
-    state :seen
+    state :received, after_enter: :notify_latest_status_to_sender
+    state :seen, after_enter: :notify_latest_status_to_sender
 
     event :broadcast do
       transitions from: :sent, to: :received, if: :sent_to_recipient_successfully?
@@ -25,6 +25,13 @@ class Message < ApplicationRecord
   scope :unread, -> { where.not(status: :seen) }
 
   private
+
+  def notify_latest_status_to_sender
+    Broadcaster.broadcast_to_msg_latest_status(
+      self.sender_id,
+      { message: { id: self.id, uuid: self.uuid, status: self.status } }
+    )
+  end
 
   def sent_to_recipient_successfully?
     broadcast = Broadcaster.broadcast_to_new_message(
