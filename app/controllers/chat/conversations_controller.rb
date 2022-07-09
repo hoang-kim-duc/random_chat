@@ -1,9 +1,5 @@
 class Chat::ConversationsController < ApplicationController
-  # def create
-  #   Conversation.create(user_conversations_attributes: conversation_params.map do |user_id|
-  #     {user_id: user_id}
-  #   end)
-  # end
+  after_action :mark_all_received_messages
 
   def index
     render json: paging(current_user.conversations
@@ -11,9 +7,13 @@ class Chat::ConversationsController < ApplicationController
                                     .order(created_at: :desc)), current_user_id: current_user.id
   end
 
-  # private
+  def seen_all
+    current_user.received_messages.unread.each(&:recipent_read!)
+  end
 
-  # def conversation_params
-  #   @conversation_params ||= params.require(:conversation).permit(:user_ids)
-  # end
+  private
+
+  def mark_all_received_messages
+    current_user.received_messages.sent.each(&:broadcast!)
+  end
 end
