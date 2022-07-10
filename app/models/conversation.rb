@@ -11,12 +11,12 @@ class Conversation < ApplicationRecord
                                                                 }, allow_destroy: true
 
   aasm column: :status do
-    state :openning, initial: true
+    state :opening, initial: true
     state :sharing
     state :closed
 
     event :close do
-      transitions from: [:openning, :sharing], to: :closed
+      transitions from: [:opening, :sharing], to: :closed
     end
   end
 

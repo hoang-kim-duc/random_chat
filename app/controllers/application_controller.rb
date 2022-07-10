@@ -7,6 +7,16 @@ class ApplicationController < ActionController::API
 
   respond_to :json
 
+  rescue_from PermissionError do |error|
+    render_json(
+      status: :unauthorized,
+      content: {
+        success: false,
+        errors: ['You are not authorized to perform this action']
+      }
+    )
+  end
+
   # rescue_from StandardError do |error|
   #   render_json(
   #     status: :bad_request,

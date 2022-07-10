@@ -1,4 +1,6 @@
 class Chat::ConversationsController < ApplicationController
+  include Chat::ConversationsControllerDocument
+
   after_action :mark_all_received_messages
 
   def index

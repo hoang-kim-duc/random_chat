@@ -1,6 +1,8 @@
 class ActiveStorage::DiskController < ActiveStorage::BaseController
   include ActiveStorage::FileServer
+  include Devise::Controllers::Helpers
 
+  before_action :authenticate_user!
   skip_forgery_protection
 
   def show
@@ -30,6 +32,10 @@ class ActiveStorage::DiskController < ActiveStorage::BaseController
   end
 
   private
+
+  def authorize_user key
+    UserPolicy.can_access_blob?(current_user, key)
+  end
 
   def named_disk_service(name)
     ActiveStorage::Blob.services.fetch(name) do

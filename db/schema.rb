@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_092454) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_10_055633) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,11 +61,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_092454) do
     t.string "uuid"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "caption"
+    t.integer "user_id"
+    t.integer "no_of_reactions", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_conversations", force: :cascade do |t|
     t.integer "conversation_id"
     t.integer "user_id"
     t.boolean "is_archived", default: false
     t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_reactions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -127,6 +142,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_092454) do
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "posts", "users"
   add_foreign_key "user_conversations", "conversations"
   add_foreign_key "user_conversations", "users"
+  add_foreign_key "user_reactions", "posts"
+  add_foreign_key "user_reactions", "users"
 end
