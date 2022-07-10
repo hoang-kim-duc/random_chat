@@ -21,7 +21,12 @@ Rails.application.routes.draw do
       post 'update_or_create'
     end
   end
-  # resources :users, only: [:show]
+  resources :users, only: [] do
+    resources :posts, only: [:index]
+  end
+  resources :posts, only: [:create, :update, :destroy] do
+    post 'toggle_react', to: 'posts#toggle_react', on: :member
+  end
   resources :conversations, module: :chat, only: [:index] do
     resources :messages, only: [:create, :index]
     put 'seen', to: 'conversations#seen_all'

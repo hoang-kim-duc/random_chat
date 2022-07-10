@@ -17,6 +17,9 @@ class User < ApplicationRecord
   has_many :conversations, through: :user_conversations
   has_many :sent_messages, class_name: 'Message', foreign_key: :sender_id
   has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
+  has_many :posts
+  has_many :user_reactions
+  has_many :reacted_posts, through: :user_reactions, source: :post
   has_one :user_setting
   has_one_attached :avatar
 
