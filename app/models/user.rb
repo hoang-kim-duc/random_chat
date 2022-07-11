@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include AASM
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,7 +7,29 @@ class User < ApplicationRecord
 
   enum gender: %i[male female other]
   enum role: %i[user admin]
-  enum status: %i[offline online]
+
+  aasm_column :status
+  aasm column: :status do
+    state :offline, initial: true
+    state :online
+
+    event :go_online do
+      after do
+        Broadcaster.broadcast_to_online_status(self.id, {user_id: self.id, is_online: true})
+      end
+
+      transitions from: [:offline, :online], to: :online
+    end
+
+    event :go_offline do
+      after do
+        Broadcaster.broadcast_to_online_status(self.id, {user_id: self.id, is_online: false, last_online: })
+      end
+
+      transitions from: [:offline, :online], to: :offline
+    end
+  end
+
   attr_accessor :user_node
 
   delegate :from_age, :to_age, :lat, :long, :radius, :gender, :enable_age_filter,

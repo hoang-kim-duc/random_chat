@@ -5,15 +5,13 @@ class AppearanceChannel < ApplicationCable::Channel
 
   def subscribed
     # user = User.find(params[:id])
-    current_user.online!
+    current_user.go_online!
     stream_from Broadcaster::URL.appearance(current_user.id)
   end
-
-  def unsubscribed; end
 
   private
 
   def handle_offline
-    HandleOfflineJob.perform_in(5.seconds.from_now, current_user.id)
+    HandleOfflineJob.perform_in(1.seconds.from_now, current_user.id)
   end
 end

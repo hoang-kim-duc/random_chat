@@ -6,7 +6,7 @@ class Broadcaster
   end
 
   class << self
-    [:pairing, :appearance, :new_message, :msg_latest_status].each do |channel|
+    [:pairing, :appearance, :new_message, :msg_latest_status, :online_status].each do |channel|
       define_method "broadcast_to_#{channel}" do |user_id, msg|
         ActionCable.server.broadcast(URL.send(channel, user_id), msg)
       end

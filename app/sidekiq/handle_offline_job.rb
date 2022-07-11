@@ -9,6 +9,6 @@ class HandleOfflineJob
     user = User.find(user_id)
     return if user.nil? || user.still_connected?
 
-    user.offline!
+    user.go_offline!
   end
 end

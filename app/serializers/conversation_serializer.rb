@@ -13,6 +13,6 @@ class ConversationSerializer < ApplicationSerializer
   end
 
   def partner
-    object.users.select { |user| user.id != @instance_options[:current_user_id] }.first.to_h
+    object.users.select { |user| user.id != @instance_options[:current_user_id] }.first.to_h(viewer: @instance_options[:viewer])
   end
 end
