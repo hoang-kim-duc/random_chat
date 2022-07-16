@@ -4,9 +4,9 @@ class Chat::ConversationsController < ApplicationController
   after_action :mark_all_received_messages
 
   def index
-    render json: paging(current_user.conversations
-                                    .includes(:users, :messages)
-                                    .order(created_at: :desc)), current_user_id: current_user.id
+    scope = Chat::LoadConversations.new(current_user).call
+    render json: paging(scope.includes(:users)
+                             .order(message_created_at: :desc)), current_user_id: current_user.id
   end
 
   def seen_all
