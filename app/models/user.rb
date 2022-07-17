@@ -80,9 +80,9 @@ class User < ApplicationRecord
     now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
-  def avatar_url
+  def avatar_path
     if self.avatar.attached?
-      Rails.application.routes.url_helpers.rails_blob_url(self.avatar)
+      Rails.application.routes.url_helpers.rails_blob_path(self.avatar)
     else
       ''
     end
