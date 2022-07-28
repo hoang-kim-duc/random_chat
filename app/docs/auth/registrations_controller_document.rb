@@ -13,6 +13,7 @@ module Auth
       param :last_name, String, required: true
       param :birthday, Date, required: true, desc: 'dd/mm/yyyy'
       param :gender, %i[male female other], required: true
+      param :avatar, ActiveStorage::Attached::One, require: true
     end
     example <<-EG
   {

@@ -6,6 +6,7 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :delete_all
   has_many :user_conversations, dependent: :delete_all
   has_many :users, through: :user_conversations
+
   accepts_nested_attributes_for :user_conversations, reject_if: lambda { |attributes|
                                                                   attributes['user_id'].blank?
                                                                 }, allow_destroy: true

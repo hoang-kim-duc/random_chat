@@ -33,6 +33,13 @@ Rails.application.routes.draw do
   end
   resource :enqueuing, module: :pairing, only: %i[create destroy]
   resource :identity, only: :show
+  resources :reports, only: :create
+  namespace "admin" do
+    resources :reports, only: [:index] do
+      put :resolve, on: :member
+    end
+    resources :users, only: [:index]
+  end
   # below is just routes for the POCs
   get 'hello', to: 'greets#create'
   post 'add_user', to: 'greets#add_user'

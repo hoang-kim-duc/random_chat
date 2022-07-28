@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_10_115744) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_20_095619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_115744) do
     t.string "caption"
     t.integer "user_id"
     t.integer "no_of_reactions", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer "problem_type"
+    t.string "text"
+    t.string "target_type"
+    t.integer "target_id"
+    t.integer "owner_id"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

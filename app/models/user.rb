@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include AASM
+  include Helpers::Reportable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -45,6 +46,8 @@ class User < ApplicationRecord
   has_many :reacted_posts, through: :user_reactions, source: :post
   has_one :user_setting
   has_one_attached :avatar
+  has_many :sent_reports, class_name: 'Report', foreign_key: :owner_id
+  has_many :received_reports, class_name: 'Report', as: :target
 
   before_update :dequeue_if_going_offline, :renew_jwk_token_if_signed_in
 
