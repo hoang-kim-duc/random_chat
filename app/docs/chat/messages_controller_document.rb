@@ -5,8 +5,8 @@ module Chat
     extend Apipie::DSL::Concern
 
     api :GET, '/conversations/:conversation_id/messages', 'load messages of a conversation'
-    param :page, Integer, require: false
-    param :per_page, Integer, require: false
+    param :page, Integer
+    param :per_page, Integer
     example <<-EG
     [
       {
@@ -69,9 +69,10 @@ module Chat
     def index; end
 
     api :POST, '/conversations/:conversation_id/messages', 'send message to user in conversation'
-    param :message, Hash, require: true do
-      param :text, String, require: true
-      param :recipient_id, Integer, require: true
+    param :message, Hash, required: true do
+      param :text, String, required: true
+      param :recipient_id, Integer, required: true
+      param :attachment, ActiveStorage::Attached::One
     end
     example <<-EG
     {

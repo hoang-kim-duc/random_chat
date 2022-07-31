@@ -2,7 +2,9 @@
 
 class Message < ApplicationRecord
   include AASM
+  extend Helpers::Attachable
 
+  add_one_attached :attachment
   aasm whiny_transitions: false
 
   aasm column: :status do

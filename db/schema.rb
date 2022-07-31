@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_20_095619) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_31_103527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,9 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_20_095619) do
     t.integer "conversation_id"
     t.integer "user_id"
     t.boolean "is_archived", default: false
-    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "opening"
   end
 
   create_table "user_reactions", force: :cascade do |t|

@@ -3,6 +3,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  get 'news_feed_posts/index'
   mount Sidekiq::Web => '/sidekiq'
 
   default_url_options host: (ENV['HOST'] || 'localhost:3000')
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
   resources :conversations, module: :chat, only: [:index] do
     resources :messages, only: [:create, :index]
     put 'seen', to: 'conversations#seen_all'
+    put 'share_profile', to: 'conversations#share_profile'
   end
   resource :enqueuing, module: :pairing, only: %i[create destroy]
   resource :identity, only: :show

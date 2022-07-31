@@ -13,5 +13,13 @@ module SystemVar
     def pair_successfully_messasge(partner_name)
       "You was matched with #{partner_name}"
     end
+
+    def requested_share_profile(partner_name)
+      "You agreed to share profile with #{partner_name}"
+    end
+
+    def partner_shared_profile(partner_name)
+      "#{partner_name} agreed to share profile with you"
+    end
   end
 end

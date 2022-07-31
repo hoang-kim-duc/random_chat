@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   include AASM
   include Helpers::Reportable
+  extend Helpers::Attachable
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -45,7 +47,7 @@ class User < ApplicationRecord
   has_many :user_reactions
   has_many :reacted_posts, through: :user_reactions, source: :post
   has_one :user_setting
-  has_one_attached :avatar
+  add_one_attached :avatar
   has_many :sent_reports, class_name: 'Report', foreign_key: :owner_id
   has_many :received_reports, class_name: 'Report', as: :target
 
@@ -83,14 +85,9 @@ class User < ApplicationRecord
     now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
-  def avatar_path
-    if self.avatar.attached?
-      Rails.application.routes.url_helpers.rails_blob_path(self.avatar)
-    else
-      ''
-    end
-  rescue
-    nil
+  def all_sharing_partners
+    user_ids = UserConversation.where(conversation_id: self.conversations.sharing.ids).where.not(user_id: 35).pluck(:user_id)
+    User.where(id: user_ids)
   end
 
   private
