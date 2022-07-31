@@ -21,6 +21,11 @@ class Conversation < ApplicationRecord
     end
   end
 
+  def load_last_message(user_id)
+    last_msg = self.messages.where.not("messages.is_system_message = true AND messages.recipient_id != #{user_id}").last
+    last_msg.slice(:id, :text, :status, :sender_id, :recipient_id, :created_at)
+  end
+
   private
 
   # def unique_pair

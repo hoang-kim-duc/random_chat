@@ -20,16 +20,16 @@ module Pairing
 
     def notify_pairing_success(current_user, found_partner)
       SystemVar.users_queue.dequeue(found_partner.user_node)
-      conversation = Conversation.create!(user_conversations_attributes: [
+      conversation = Conversation.create!(status: 'opening', user_conversations_attributes: [
         { user_id: current_user.id }, { user_id: found_partner.id }
       ])
       message1 = conversation.messages.create!(recipient_id: current_user.id, is_system_message: true,
         text: SystemVar.pair_successfully_messasge(found_partner.name), status: "received")
       message2 = conversation.messages.create!(recipient_id: found_partner.id, is_system_message: true,
         text: SystemVar.pair_successfully_messasge(current_user.name), status: "received")
-      Broadcaster.broadcast_to_pairing(current_user.id, conversation.to_h)
-      Broadcaster.broadcast_to_pairing(found_partner.id, conversation.to_h)
-      puts "pair success for #{current_user.name} and #{found_partner.name}"
+      Broadcaster.broadcast_to_pairing(current_user.id, conversation.to_h(current_user_id: current_user.id))
+      Broadcaster.broadcast_to_pairing(found_partner.id, conversation.to_h(current_user_id: found_partner.id))
+      Rails.logger.info "pair success for #{current_user.name} and #{found_partner.name}"
     end
 
     def get_best_partner(current_user)
