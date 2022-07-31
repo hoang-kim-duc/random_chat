@@ -18,7 +18,6 @@ class Post < ApplicationRecord
   end
 
   def image_path
-    binding.pry
     if self.image.attached?
       Rails.application.routes.url_helpers.rails_blob_path(self.image)
     else
