@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
-  has_one_attached :image
+  extend Helpers::Attachable
+
+  add_one_attached :image
   belongs_to :user
   has_many :user_reactions
   has_many :reacted_by_users, through: :user_reactions, source: :user

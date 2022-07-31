@@ -33,7 +33,7 @@ module Chat
     private
 
     def message_params
-      @message_params ||= params.require(:message).permit(:text, :recipient_id, :uuid).merge(sender_id: current_user.id)
+      @message_params ||= params.require(:message).permit(:text, :recipient_id, :uuid, :attachment).merge(sender_id: current_user.id)
     end
 
     def load_conversation

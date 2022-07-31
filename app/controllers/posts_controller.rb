@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_action :set_user, :check_permission_for_read_post, only: :index
   # GET /posts
   def index
-    render json: paging(@user.posts.includes(:user_reactions)), viewer: current_user
+    render json: paging(@user.posts.includes(:user_reactions).order(created_at: :desc)), viewer: current_user
   end
 
   # POST /posts
