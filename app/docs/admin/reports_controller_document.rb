@@ -7,6 +7,8 @@ module Admin
     param :per_page, Integer, require: false
     param :q, Hash, require: true, desc: 'data for filter' do
       param :status_eq, ['unresolved', 'resolved'], require: false
+      param :target_id_eq, Integer, require: false
+      param :target_type_eq, String, require: false
     end
     example <<-EXAMPLE
     [{
