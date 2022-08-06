@@ -2,10 +2,10 @@ class PostsController < ApplicationController
   include PostsControllerDocument
 
   before_action :set_post, :check_permission_for_modify, only: %i[ update destroy toggle_react ]
-  before_action :set_user, :check_permission_for_read_post, only: :index
   # GET /posts
   def index
-    render json: paging(@user.posts.includes(:user_reactions).order(created_at: :desc)), viewer: current_user
+    render json: Post.where(user_id: current_user.all_sharing_partner_ids)
+                     .order(created_at: :desc)
   end
 
   # POST /posts
@@ -48,10 +48,6 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def set_user
-    @user = User.find(params[:user_id])
-  end
-
   def check_permission_for_read_post
     raise PermissionError unless UserPolicy.can_read_posts_of_owner?(current_user, @user)
   end
@@ -62,6 +58,6 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:image, :caption).merge(user_id: current_user.id)
+    params.require(:post).permit(:image, :caption, :location).merge(user_id: current_user.id)
   end
 end
