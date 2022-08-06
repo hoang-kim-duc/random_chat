@@ -3,7 +3,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  get 'news_feed_posts/index'
   mount Sidekiq::Web => '/sidekiq'
 
   default_url_options host: (ENV['HOST'] || 'localhost:3000')
@@ -22,10 +21,10 @@ Rails.application.routes.draw do
       post 'update_or_create'
     end
   end
-  resources :users, only: [] do
+  resources :users, module: :users, only: [] do
     resources :posts, only: [:index]
   end
-  resources :posts, only: [:create, :update, :destroy] do
+  resources :posts, only: [:index, :create, :update, :destroy] do
     post 'toggle_react', to: 'posts#toggle_react', on: :member
   end
   resources :conversations, module: :chat, only: [:index] do

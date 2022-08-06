@@ -85,9 +85,8 @@ class User < ApplicationRecord
     now.year - birthday.year - ((now.month > birthday.month || (now.month == birthday.month && now.day >= birthday.day)) ? 0 : 1)
   end
 
-  def all_sharing_partners
-    user_ids = UserConversation.where(conversation_id: self.conversations.sharing.ids).where.not(user_id: 35).pluck(:user_id)
-    User.where(id: user_ids)
+  def all_sharing_partner_ids
+    user_ids = UserConversation.where(conversation_id: self.conversations.sharing.ids).pluck(:user_id).uniq
   end
 
   private
