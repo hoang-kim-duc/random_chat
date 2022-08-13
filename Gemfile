@@ -27,6 +27,7 @@ gem 'rspec-rails'
 gem 'sidekiq'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'ransack'
+gem 'rails-erd'
 
 group :development, :test do
   gem 'database_cleaner-active_record'
