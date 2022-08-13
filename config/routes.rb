@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :users, module: :users, only: [] do
     resources :posts, only: [:index]
   end
+  resources :users, only: :show
   resources :posts, only: [:index, :create, :update, :destroy] do
     post 'toggle_react', to: 'posts#toggle_react', on: :member
   end
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
     end
     resources :users, only: [:index]
   end
+  resources :partners, only: [:index]
   # below is just routes for the POCs
   get 'hello', to: 'greets#create'
   post 'add_user', to: 'greets#add_user'

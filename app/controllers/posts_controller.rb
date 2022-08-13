@@ -4,8 +4,9 @@ class PostsController < ApplicationController
   before_action :set_post, :check_permission_for_modify, only: %i[ update destroy toggle_react ]
   # GET /posts
   def index
-    render json: Post.where(user_id: current_user.all_sharing_partner_ids)
-                     .order(created_at: :desc)
+    @post = Post.where(user_id: current_user.all_sharing_partner_ids).includes(:user)
+                .order(created_at: :desc)
+    render json: paging(@post)
   end
 
   # POST /posts
