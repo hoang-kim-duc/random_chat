@@ -31,3 +31,5 @@
 
 # Ignore application configuration
 /config/application.yml
+doc/*
+erd.pdf
