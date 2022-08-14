@@ -1,0 +1,9 @@
+attributes:
+  - content
+  - foreign_key
+  - inheritance
+  - primary_key
+  - timestamps
+polymorphism: false
+indirect: false
+notation: bachman

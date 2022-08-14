@@ -6,6 +6,8 @@ class Chat::ConversationsController < ApplicationController
 
   def index
     scope = Chat::LoadConversations.new(current_user).call
+    return render json: [] if scope.size == 0
+
     render json: paging(scope.includes(:users)
                              .order(message_created_at: :desc)), current_user_id: current_user.id
   end

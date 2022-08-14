@@ -2,7 +2,7 @@ class UserSerializer < ApplicationSerializer
   attributes :id, :name, :avatar_path, :last_online, :jwt_token, :gender, :age
   attribute :online?, key: :is_online
 
-  def last_online
-    process_time(object.last_online, @instance_options[:viewer])
+  def avatar_path
+    object.avatar_path(100, 100)
   end
 end

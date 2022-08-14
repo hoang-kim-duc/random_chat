@@ -2,9 +2,14 @@ module Helpers::Attachable
   def add_one_attached(key)
     has_one_attached key
 
-    define_method "#{key}_path" do
+    define_method "#{key}_path" do |width = nil, height = nil|
       if self.send(key).attached?
-        Rails.application.routes.url_helpers.rails_blob_path(self.send(key))
+        if width && height
+          Rails.application.routes.url_helpers.rails_blob_path(self.send(key)
+            .variant(resize_to_limit: [width, height]).processed)
+        else
+          Rails.application.routes.url_helpers.rails_blob_path(self.send(key))
+        end
       else
         ''
       end

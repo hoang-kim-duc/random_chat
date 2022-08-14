@@ -28,6 +28,10 @@ gem 'sidekiq'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'ransack'
 gem 'rails-erd'
+gem 'ruby-graphviz'
+gem "image_processing"
+gem 'railroady'
+gem 'ruby-vips'
 
 group :development, :test do
   gem 'database_cleaner-active_record'

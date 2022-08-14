@@ -33,6 +33,8 @@ module Chat
     end
 
     def add_last_message
+      return unless @scope.size > 0
+
       @scope = @scope.joins("LEFT JOIN (#{last_messages_by_conversation}) m ON m.conversation_id = conversations.id").select("conversations.*, m.*")
     end
   end
