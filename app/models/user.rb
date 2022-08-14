@@ -86,7 +86,7 @@ class User < ApplicationRecord
   end
 
   def all_sharing_partner_ids
-    user_ids = UserConversation.where(conversation_id: self.conversations.sharing.ids).pluck(:user_id).uniq
+    user_ids = UserConversation.where(conversation_id: self.conversations.sharing.ids).pluck(:user_id).uniq - [id]
   end
 
   private
