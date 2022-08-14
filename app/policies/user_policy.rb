@@ -23,6 +23,9 @@ class UserPolicy < ApplicationPolicy
 
   def can_access_blob?(key)
     @blob = ActiveStorage::Blob.find_by(key: key)
+    if @blob.attachments.first.record_type == 'ActiveStorage::VariantRecord'
+      @blob = @blob.attachments.first.record.blob
+    end
     can_user_access_blob?
   end
 

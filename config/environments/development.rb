@@ -82,3 +82,4 @@ Rails.application.configure do
 
   config.action_cable.allowed_request_origins = ['http://localhost:3001', 'http://127.0.0.1:3001']
 end
+# ActiveStorage::Current.url_options = { protocol: 'http', host: 'localhost', port: '3000' }
