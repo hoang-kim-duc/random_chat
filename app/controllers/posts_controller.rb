@@ -1,7 +1,9 @@
 class PostsController < ApplicationController
   include PostsControllerDocument
 
-  before_action :set_post, :check_permission_for_modify, only: %i[ update destroy toggle_react ]
+  before_action :set_post, only: %i[ update destroy toggle_react ]
+  before_action :check_permission_for_modify, only: %i[ update destroy ]
+
   # GET /posts
   def index
     user_ids = current_user.all_sharing_partner_ids + [current_user.id]
