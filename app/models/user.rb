@@ -92,6 +92,10 @@ class User < ApplicationRecord
     user_ids = UserConversation.where(conversation_id: self.conversations.sharing.ids).pluck(:user_id).uniq - [id]
   end
 
+  def is_sharing_with?(user_id)
+    all_sharing_partner_ids.include?(user_id)
+  end
+
   private
 
   def renew_jwk_token_if_signed_in
