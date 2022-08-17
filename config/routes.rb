@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   resources :users, module: :users, only: [] do
     resources :posts, only: [:index]
   end
-  resources :users, only: :show
+  resources :users, only: [:show, :update]
   resources :posts, only: [:index, :create, :update, :destroy] do
     post 'toggle_react', to: 'posts#toggle_react', on: :member
   end
