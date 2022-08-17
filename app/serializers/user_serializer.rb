@@ -1,5 +1,6 @@
 class UserSerializer < ApplicationSerializer
-  attributes :id, :name, :avatar_path, :last_online, :jwt_token, :gender, :age, :address
+  attributes :id, :name, :avatar_path, :last_online, :jwt_token, :gender,
+             :age, :address, :email, :first_name, :last_name, :hobbies, :birthday
   attribute :online?, key: :is_online
 
   def avatar_path
