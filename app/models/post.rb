@@ -18,14 +18,4 @@ class Post < ApplicationRecord
       user_reaction.save!
     end
   end
-
-  def image_path
-    if self.image.attached?
-      Rails.application.routes.url_helpers.rails_blob_path(self.image)
-    else
-      ''
-    end
-  rescue
-    nil
-  end
 end

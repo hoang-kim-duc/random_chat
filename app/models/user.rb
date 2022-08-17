@@ -53,6 +53,9 @@ class User < ApplicationRecord
 
   before_update :dequeue_if_going_offline, :renew_jwk_token_if_signed_in
 
+  validates :email, format: { with: /\b[A-Z0-9._%a-z\-]+@fpt\.edu\.vn\z/,
+    message: "must be a fpt.edu.vn account" }
+
   class << self
     def verify_jwt_token(token)
       payload = JWT.decode token, Rails.application.secret_key_base, true, { algorithm: 'HS256' }
