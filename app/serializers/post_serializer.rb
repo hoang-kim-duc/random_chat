@@ -11,4 +11,8 @@ class PostSerializer < ApplicationSerializer
 
     object.user_reactions.pluck(:user_id).include? @instance_options[:viewer].id
   end
+
+  def image_path
+    object.image_path(500, 500)
+  end
 end
