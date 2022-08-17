@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :find_user
 
   def show
-    render json: @user
+    render json: @user, show_address: true, viewer_id: current_user.id
   end
 
   def update

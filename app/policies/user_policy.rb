@@ -45,6 +45,8 @@ class UserPolicy < ApplicationPolicy
       blob_owner = blob.attachments[0].record
     when 'Post_image'
       blob_owner = blob.attachments[0].record.user
+    when 'Message_attachment'
+      blob_owner = blob.attachments[0].record.sender
     else
       blob_owner = nil
     end
