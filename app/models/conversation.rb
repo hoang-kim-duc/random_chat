@@ -26,6 +26,12 @@ class Conversation < ApplicationRecord
       transitions from: [:opening, :sharing], to: :sharing
     end
     event :close do
+      after do
+        users.each do |user|
+          Broadcaster.broadcast_to_conversation_status(user.id, {conversation_id: id, status: status})
+        end
+      end
+
       transitions from: [:opening, :sharing], to: :closed
     end
   end
