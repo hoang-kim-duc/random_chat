@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   resources :conversations, module: :chat, only: [:index] do
     resources :messages, only: [:create, :index]
     put 'seen', to: 'conversations#seen_all'
+    put 'close', to: 'conversations#close'
     put 'share_profile', to: 'conversations#share_profile'
   end
   resource :enqueuing, module: :pairing, only: %i[create destroy]

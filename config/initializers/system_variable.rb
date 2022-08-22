@@ -21,5 +21,13 @@ module SystemVar
     def partner_shared_profile(partner_name)
       "#{partner_name} agreed to share profile with you"
     end
+
+    def close_conversation(partner_name)
+      "You ended this conversation. You and #{partner_name} can not chat and see each other information from now"
+    end
+
+    def partner_close_conversation(partner_name)
+      "#{partner_name} ended this conversation. You and #{partner_name} can not chat and see each other information from now"
+    end
   end
 end

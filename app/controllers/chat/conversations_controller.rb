@@ -2,7 +2,7 @@ class Chat::ConversationsController < ApplicationController
   include Chat::ConversationsControllerDocument
 
   after_action :mark_all_received_messages
-  before_action :load_conversation, only: [:seen_all, :share_profile]
+  before_action :load_conversation, only: [:seen_all, :share_profile, :close]
 
   def index
     scope = Chat::LoadConversations.new(current_user).call
@@ -29,6 +29,12 @@ class Chat::ConversationsController < ApplicationController
     render json: {success: true}, status: :ok
   # rescue AASM::InvalidTransition
   #   render json: {success: false, error: 'You already requested to share profile'}, status: :bad_request
+  end
+
+  def close
+    Chat::EndConversation.new(current_user, @conversation).call
+
+    render json: {success: true}
   end
 
   private
