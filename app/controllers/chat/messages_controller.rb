@@ -8,6 +8,9 @@ module Chat
     # after_action :mark_all_received_messages
 
     def index
+      current_user.received_messages
+        .where(conversation_id: @conversation.id)
+        .unread.each(&:recipent_read!)
       render json: paging(@conversation.messages.order(created_at: :desc)), viewer: current_user
     end
 

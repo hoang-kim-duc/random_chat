@@ -17,7 +17,7 @@ class Message < ApplicationRecord
     end
 
     event :recipent_read do
-      transitions from: :received, to: :seen
+      transitions from: [:sent, :received], to: :seen
     end
   end
 
