@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tsung SYSTEM "/opt/homebrew/Cellar/tsung/1.7.0/share/tsung/tsung-1.0.dtd" [
+  <!ENTITY login_post_session SYSTEM "tsung_recorder20180717.xml">
+]>
+<tsung loglevel="info">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="1000"/>
+  </clients>
+
+  <servers>
+    <server host="localhost" port="8080" type="tcp"></server>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="120" unit="second">
+      <users  maxnumber="1" arrivalrate="1" unit="second" />
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
+
+  <sessions>
+    <session probability="100" name="websocket" type="ts_websocket">
+      <request>
+        <websocket type="connect" path="/cable?jwt_token=eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozNX0.cegaaJyApgAb_8hT5L7fhlkRLNH7EjPspGPD06MDcc0" />
+      </request>
+
+      <for var="i" from="1" to="1000" incr="1">
+        <thinktime value="wait_bidi"></thinktime>
+      </for>
+    </session>
+  </sessions>
+</tsung>

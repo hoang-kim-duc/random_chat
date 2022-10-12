@@ -32,6 +32,7 @@ gem 'ruby-graphviz'
 gem "image_processing"
 gem 'railroady'
 gem 'ruby-vips'
+gem "anycable-rails", "~> 1.1"
 
 group :development, :test do
   gem 'database_cleaner-active_record'
